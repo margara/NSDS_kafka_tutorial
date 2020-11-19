@@ -10,12 +10,14 @@ import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.clients.producer.RecordMetadata;
 import org.apache.kafka.common.serialization.StringSerializer;
 
+import javax.crypto.Cipher;
+
 public class BasicProducer {
     private static final String defaultTopic = "topicA";
 
     private static final int numMessages = 100000;
     private static final int waitBetweenMsgs = 500;
-    private static final boolean waitAck = false;
+    private static final boolean waitAck = true;
 
     private static final String serverAddr = "localhost:9092";
 
@@ -49,7 +51,8 @@ public class BasicProducer {
 
             if (waitAck) {
                 try {
-                    System.out.println(future.get());
+                    RecordMetadata ack = future.get();
+                    System.out.println("Ack for topic " + ack.topic() + ", partition " + ack.partition() + ", offset " + ack.offset());
                 } catch (InterruptedException | ExecutionException e1) {
                     e1.printStackTrace();
                 }

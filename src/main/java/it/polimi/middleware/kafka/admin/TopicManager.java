@@ -1,4 +1,4 @@
-package it.polimi.middleware.kafka.basic;
+package it.polimi.middleware.kafka.admin;
 
 import org.apache.kafka.clients.admin.*;
 

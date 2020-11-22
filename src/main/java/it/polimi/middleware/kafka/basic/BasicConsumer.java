@@ -16,8 +16,8 @@ public class BasicConsumer {
     private static final boolean autoCommit = true;
     private static final int autoCommitIntervalMs = 15000;
 
-    // Default is LATEST: try EARLIEST instead
-    private static final OffsetResetStrategy offsetResetStrategy = OffsetResetStrategy.LATEST;
+    // Default is "latest": try "earliest" instead
+    private static final String offsetResetStrategy = "latest";
 
     public static void main(String[] args) {
         // If there are arguments, use the first as group and the second as topic.

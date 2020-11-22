@@ -16,8 +16,8 @@ public class BasicConsumerManual {
     private static final boolean autoCommit = false;
     private static final int commitEvery = 100;
 
-    // Default is LATEST: try EARLIEST instead
-    private static final OffsetResetStrategy offsetResetStrategy = OffsetResetStrategy.LATEST;
+    // Default is "latest": try "earliest" instead
+    private static final String offsetResetStrategy = "latest";
 
     public static void main(String[] args) {
         // If there are arguments, use the first as group and the second as topic.

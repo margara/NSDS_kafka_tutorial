@@ -10,8 +10,6 @@ import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.clients.producer.RecordMetadata;
 import org.apache.kafka.common.serialization.StringSerializer;
 
-import javax.crypto.Cipher;
-
 public class BasicProducer {
     private static final String defaultTopic = "topicA";
 

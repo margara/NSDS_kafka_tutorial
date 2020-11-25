@@ -47,6 +47,7 @@ public class AtomicForwarder {
         producerProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
         producerProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
         producerProps.put(ProducerConfig.TRANSACTIONAL_ID_CONFIG, producerTransactionalId);
+        producerProps.put(ProducerConfig.ENABLE_IDEMPOTENCE_CONFIG, String.valueOf(true));
 
         final KafkaProducer<String, String> producer = new KafkaProducer<>(producerProps);
         producer.initTransactions();
@@ -56,23 +57,23 @@ public class AtomicForwarder {
             producer.beginTransaction();
             for (final ConsumerRecord<String, String> record : records) {
                 System.out.println("Partition: " + record.partition() +
-                                "\tOffset: " + record.offset() +
-                                "\tKey: " + record.key() +
-                                "\tValue: " + record.value()
+                        "\tOffset: " + record.offset() +
+                        "\tKey: " + record.key() +
+                        "\tValue: " + record.value()
                 );
                 producer.send(new ProducerRecord<>(outputTopic, record.key(), record.value()));
-
-                // The producer manually commits the outputs for the consumer within the transaction
-                final Map<TopicPartition, OffsetAndMetadata> map = new HashMap<>();
-                for (final TopicPartition partition : records.partitions()) {
-                    final List<ConsumerRecord<String, String>> partitionRecords = records.records(partition);
-                    final long lastOffset = partitionRecords.get(partitionRecords.size() - 1).offset();
-                    map.put(partition, new OffsetAndMetadata(lastOffset + 1));
-                }
-
-                producer.sendOffsetsToTransaction(map, consumerGroupId);
-                producer.commitTransaction();
             }
+
+            // The producer manually commits the outputs for the consumer within the transaction
+            final Map<TopicPartition, OffsetAndMetadata> map = new HashMap<>();
+            for (final TopicPartition partition : records.partitions()) {
+                final List<ConsumerRecord<String, String>> partitionRecords = records.records(partition);
+                final long lastOffset = partitionRecords.get(partitionRecords.size() - 1).offset();
+                map.put(partition, new OffsetAndMetadata(lastOffset + 1));
+            }
+
+            producer.sendOffsetsToTransaction(map, consumerGroupId);
+            producer.commitTransaction();
         }
     }
 }

@@ -4,7 +4,6 @@ import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
-import org.apache.kafka.common.IsolationLevel;
 import org.apache.kafka.common.serialization.StringDeserializer;
 
 import java.time.Duration;
@@ -32,9 +31,9 @@ public class TransactionalConsumer {
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, serverAddr);
         props.put(ConsumerConfig.GROUP_ID_CONFIG, groupId);
         if (readUncommitted) {
-            props.put(ConsumerConfig.ISOLATION_LEVEL_CONFIG, IsolationLevel.READ_UNCOMMITTED);
+            props.put(ConsumerConfig.ISOLATION_LEVEL_CONFIG, "read_uncommitted");
         } else {
-            props.put(ConsumerConfig.ISOLATION_LEVEL_CONFIG, IsolationLevel.READ_COMMITTED);
+            props.put(ConsumerConfig.ISOLATION_LEVEL_CONFIG, "read_committed");
         }
 
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());

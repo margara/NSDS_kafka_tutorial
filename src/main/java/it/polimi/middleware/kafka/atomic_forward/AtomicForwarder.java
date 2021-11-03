@@ -72,7 +72,7 @@ public class AtomicForwarder {
                 map.put(partition, new OffsetAndMetadata(lastOffset + 1));
             }
 
-            producer.sendOffsetsToTransaction(map, consumerGroupId);
+            producer.sendOffsetsToTransaction(map, consumer.groupMetadata());
             producer.commitTransaction();
         }
     }

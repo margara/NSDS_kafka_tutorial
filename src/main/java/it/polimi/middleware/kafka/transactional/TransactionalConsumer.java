@@ -17,9 +17,12 @@ public class TransactionalConsumer {
 
     private static final String serverAddr = "localhost:9092";
 
+    // Default is "latest": try "earliest" instead
+    private static final String offsetResetStrategy = "latest";
+
     // If this is set to true, the consumer might also read records
     // that come from aborted transactions
-    private static final boolean readUncommitted = true;
+    private static final boolean readUncommitted = false;
 
     public static void main(String[] args) {
         // If there are arguments, use the first as group and the second as topic.
@@ -35,6 +38,8 @@ public class TransactionalConsumer {
         } else {
             props.put(ConsumerConfig.ISOLATION_LEVEL_CONFIG, "read_committed");
         }
+
+        props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, offsetResetStrategy);
 
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());

@@ -64,7 +64,7 @@ public class AtomicForwarder {
                 producer.send(new ProducerRecord<>(outputTopic, record.key(), record.value()));
             }
 
-            // The producer manually commits the outputs for the consumer within the transaction
+            // The producer manually commits the offsets for the consumer within the transaction
             final Map<TopicPartition, OffsetAndMetadata> map = new HashMap<>();
             for (final TopicPartition partition : records.partitions()) {
                 final List<ConsumerRecord<String, String>> partitionRecords = records.records(partition);

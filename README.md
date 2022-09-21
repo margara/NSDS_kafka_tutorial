@@ -1,3 +1,3 @@
 # Apache Kafka tutorial
 
-Tutorial and examples of Apache Kafka for the Middleware Technologies for Distributed Systems course
+Tutorial and examples of Apache Kafka for the NSDS course at Politecnico di Milano

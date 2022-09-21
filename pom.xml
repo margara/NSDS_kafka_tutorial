@@ -2,7 +2,7 @@
 <project>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>it.polimi.middleware.kafka</groupId>
+    <groupId>it.polimi.nsds.kafka</groupId>
     <artifactId>tutorial</artifactId>
     <version>1</version>
 
@@ -19,7 +19,7 @@
         <dependency>
             <groupId>org.apache.kafka</groupId>
             <artifactId>kafka-clients</artifactId>
-            <version>3.1.0</version>
+            <version>3.2.3</version>
         </dependency>
     </dependencies>
 </project>
